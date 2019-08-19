@@ -1,0 +1,14 @@
+{
+	"authors": [
+		"Mohamed Benrebia",
+		"ipfinder.io"
+	],
+	"copyright": "Copyright © 2019, Mohamed Ben rebia, ipfinder.io Teams ",
+	"description": "ipfinder",
+	"homepage": "https://ipfinder.io",
+	"license": "Apache-2.0",
+    "sourcePaths": [ "source" ],
+    "importPaths": [ "source" ],
+    "mainSourceFile": "source/ipfinder.d",
+	"name": "ipfinder"
+}

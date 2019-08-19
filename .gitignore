@@ -1,0 +1,17 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/ipfinder
+ipfinder.so
+ipfinder.dylib
+ipfinder.dll
+ipfinder.a
+ipfinder.lib
+ipfinder-test-*
+*.exe
+*.o
+*.obj
+*.lst
+tset.d
+libipfinder.a
