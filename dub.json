@@ -3,13 +3,17 @@
 		"Mohamed Benrebia",
 		"ipfinder.io"
 	],
-    "version" : "1.0.0",
 	"copyright": "Copyright © 2019, Mohamed Ben rebia, ipfinder.io Teams ",
 	"description": "ipfinder",
 	"homepage": "https://ipfinder.io",
+	"importPaths": [
+		"source"
+	],
 	"license": "Apache-2.0",
-    "sourcePaths": [ "source" ],
-    "importPaths": [ "source" ],
-    "mainSourceFile": "source/ipfinder.d",
-	"name": "ipfinder"
+	"mainSourceFile": "source/ipfinder.d",
+	"name": "ipfinder",
+	"sourcePaths": [
+		"source"
+	],
+	"version": "1.0.0"
 }
