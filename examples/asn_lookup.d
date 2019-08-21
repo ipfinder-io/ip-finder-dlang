@@ -1,8 +1,24 @@
-import std.stdio, std.regex;
+import std.stdio : stdout, stderr;
 import ipfinder;
+import std.json;
 
-void main(string argv[])
+
+// lookup Asn information
+void main()
 {
-    string asn = argv[1];  // assuming phone is passed as the first argument on the command line
+        Ipfinder ipfinder = new Ipfinder("YOUR_TOKEN_GOES_HERE");
+
+        try {
+            // lookup Asn information
+            string asn = "as36947";
+
+            JSONValue response = ipfinder.getAsn(asn);
+
+            // print data
+            writeln(response);
+
+        } catch (Exception e) {
+            // Handle error
+        }
 
 }
