@@ -11,10 +11,10 @@ class Asnvalidation
 {
 	/**
 	 * Helper method for validating an argument if it is asn number
-	 * 
+	 *
 	 */
     static int validate(string asn)
-    {	
+    {
         if (!matchAll(asn, regex(`^(as|AS)(\d+)$`)))
         {
         	//writeln("NOT MATCH");
@@ -24,14 +24,3 @@ class Asnvalidation
         return true;
     }
 }
-
-
-//     * Helper method for validating an argument if it is asn number
-//     *
-//     * @param $argument     mixed The object to be validated
-//     * @return bool
-
-//void main()
-//{
-//	Asnvalidation.validate("AA");
-//}

@@ -6,15 +6,14 @@ module ipfinder;
  * Copyright: Apache-2.0
  +/
 
-
 import std.stdio;
 import std.net.curl;
-import std.json : JSONValue, parseJSON;
+import std.json;
 import std.string;
 import std.array : split;
 import std.uri : encode;
 import std.exception;
-
+import std.conv;
 import Validation.Asnvalidation;
 import Validation.Domainvalidation;
 import Validation.Firewallvalidation;
@@ -22,11 +21,6 @@ import Validation.Ipvalidation;
 import Validation.Tokenvalidation;
 import info;
 //import Exception.IPfinderException;
-
-
-struct Json {
-    JSONValue all;
-}
 
 /+
  * Ipfinder
@@ -79,7 +73,6 @@ class Ipfinder
      +/
     const string DOMAIN_BY_PATH = "domainby/";
 
-
     public string token;
 
     public string baseUrl;
@@ -88,158 +81,140 @@ class Ipfinder
 
     public string endpoint;
 
-    public JSONValue body;
-
-
     public this(string token = null, string baseUrl = null)
     {
-    	if (token == null)
-    	{
-    		this.token = DEFAULT_API_TOKEN;
-    	}
-    	else
-    	{
-    		Tokenvalidation.validate(token);
-    		this.token = token;
-    	}
-    	if (baseUrl == null)
-    	{
-    		this.baseUrl = DEFAULT_BASE_URL;
-    	}
-    	else
-    	{
-    		this.baseUrl = baseUrl;
-    	}
+        if (token == null)
+        {
+            this.token = DEFAULT_API_TOKEN;
+        }
+        else
+        {
+            Tokenvalidation.validate(token);
+            this.token = token;
+        }
+        if (baseUrl == null)
+        {
+            this.baseUrl = DEFAULT_BASE_URL;
+        }
+        else
+        {
+            this.baseUrl = baseUrl;
+        }
     }
 
     /+
-     
+
      +/
-    public void call(string path = null, string format = null)
+    public JSONValue call(string path = null, string format = null)
     {
 
-    	if (format == null)
-    	{
-    		this.format = FORMAT;
-    	}
-    	else
-    	{
-    		this.format = format;
-    	}
+        if (format == null)
+        {
+            this.format = FORMAT;
+        }
+        else
+        {
+            this.format = format;
+        }
 
-    	auto http = HTTP();
-    	http.addRequestHeader("Content-Type", "application/json");
-    	http.addRequestHeader("User-Agent", "IPfinder dlang-client");
-		
+        auto http = HTTP();
+        http.addRequestHeader("Content-Type", "application/json");
+        http.addRequestHeader("User-Agent", "IPfinder dlang-client");
 
-		this.endpoint = join([this.baseUrl,path]);
-			auto content = post(this.endpoint, `{"token": "free", "foramt" :"json"}`, http);
+        this.endpoint = join([this.baseUrl, path]);
 
-			auto status = http.statusLine().code;
-			
-			if (status != 200)
-			{
-				throw new Exception("");
-			}
-			else
-			{
-                JSONValue body = parseJSON(content);
-                Json data;
+        JSONValue data = ["token" : this.token, "foramt" : this.format];
 
-                data.all = body;
+        auto content = post(this.endpoint, text(data), http);
 
-			   //	writeln(this.data);
-               // writeln(this.data["continent_code"].str());
-			}
+        auto status = http.statusLine().code;
 
-    	//auto content = post(this.baseUrl + path, http);
+        if (status != 200)
+        {
+            throw new Exception("");
+        }
+        else
+        {
+            return parseJSON(content);
+        }
 
 
     }
 
     /+
-     
+
      +/
-    public void Authentication()
+    public JSONValue Authentication()
     {
-    	return call();
+        return call();
     }
 
     /+
-     
+
      +/
-    public void getAddressInfo(string path)
+    public JSONValue getAddressInfo(string path)
     {
-    	Ipvalidation.validate(path);
-    	return call(path);
+        Ipvalidation.validate(path);
+        return call(path);
     }
 
     /+
-     
+
      +/
-    public void getAsn(string path)
+    public JSONValue getAsn(string path)
     {
-    	Asnvalidation.validate(path);
-    	return call(path);
+        Asnvalidation.validate(path);
+        return call(path);
     }
 
     /+
-     
+
      +/
-    public void getStatus()
+    public JSONValue getStatus()
     {
-    	return call(STATUS_PATH);
+        return call(STATUS_PATH);
     }
 
     /+
-     
+
      +/
-    public void getRanges(string path)
+    public JSONValue getRanges(string path)
     {
-    	return call(join([RANGES_PATH,path.encode]));
+        return call(join([RANGES_PATH, path.encode]));
     }
 
     /+
-     
+
      +/
-    public void getFirewall(string path, string formats)
+    public JSONValue getFirewall(string path, string formats)
     {
-    	Firewallvalidation.validate(path,formats);
-    	return call(join([FIREWALL_PATH,path]),formats);
+        Firewallvalidation.validate(path, formats);
+        return call(join([FIREWALL_PATH, path]), formats);
     }
 
     /+
-     
+
      +/
-    public void getDomain(string path)
+    public JSONValue getDomain(string path)
     {
-    	Domainvalidation.validate(path);
-    	return call(join([DOMAIN_PATH,path]));
+        Domainvalidation.validate(path);
+        return call(join([DOMAIN_PATH, path]));
     }
 
     /+
-     
+
      +/
-    public void getDomainHistory(string path)
+    public JSONValue getDomainHistory(string path)
     {
-    	Domainvalidation.validate(path);
-    	return call(join([DOMAIN_H_PATH,path]));
+        Domainvalidation.validate(path);
+        return call(join([DOMAIN_H_PATH, path]));
     }
 
     /+
-     
+
      +/
-    public void getDomainBy(string path)
+    public JSONValue getDomainBy(string path)
     {
-    	return call(join([DOMAIN_BY_PATH,path]));
+        return call(join([DOMAIN_BY_PATH, path]));
     }
-  }
-
-
-
-void main()
-{
-	Ipfinder ipfinder = new Ipfinder();
-	ipfinder.Authentication();
-    
 }

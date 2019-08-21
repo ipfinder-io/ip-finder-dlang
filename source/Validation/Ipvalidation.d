@@ -11,7 +11,7 @@ class Ipvalidation
 {
 	/**
 	 * Helper method for validating an argument if it is (IPV4|IPV6) IP address
-	 * 
+	 *
 	 */
     static int validate(string ip)
     {
@@ -22,9 +22,3 @@ class Ipvalidation
         return true;
     }
 }
-
-//    *
-//     * Helper method for validating an argument if it is (IPV4|IPV6) IP address
-//     *
-//     * @param $argument     mixed The object to be validated
-//     * @return bool
