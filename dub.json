@@ -3,6 +3,7 @@
 		"Mohamed Benrebia",
 		"ipfinder.io"
 	],
+    "version" : "1.0.0",
 	"copyright": "Copyright © 2019, Mohamed Ben rebia, ipfinder.io Teams ",
 	"description": "ipfinder",
 	"homepage": "https://ipfinder.io",
